@@ -1,99 +1,113 @@
-# React Scientific Calculator
+<div align="center">
 
-A modern, feature-rich scientific calculator built with React and Next.js. Supports basic arithmetic operations, advanced scientific functions, memory operations, and includes a calculation history panel.
+# 🧮 Scientific Calculator (React + Next.js)
 
-## Author
+A responsive scientific calculator with full expression input, memory keys, a clickable history panel, keyboard support and light/dark themes.
 
-**Zain Aftab**
+![Next.js](https://img.shields.io/badge/Next.js-16-000000?logo=nextdotjs&logoColor=white)
+![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=black)
+![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?logo=typescript&logoColor=white)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4-06B6D4?logo=tailwindcss&logoColor=white)
+![License](https://img.shields.io/badge/license-MIT-green)
+
+<img src="docs/screenshot.png" alt="Scientific calculator with history panel" width="330"/>
+
+</div>
+
+> A desktop version written in Python and Tkinter is in [Scientific-Calculator](https://github.com/ZainAftab-dev/Scientific-Calculator).
+
+---
 
 ## Features
 
-### Basic Operations
-- Addition, Subtraction, Multiplication, Division
-- Decimal numbers
-- Parentheses for grouping expressions
-- Percentage calculations
+| Group | Keys |
+|---|---|
+| Arithmetic | `+` `-` `×` `÷`, brackets `(` `)`, decimals |
+| Powers and roots | `^` (power), `√` (square root), `!` (factorial) |
+| Trigonometry (degrees) | `sin`, `cos`, `tan`, `asin`, `acos`, `atan` |
+| Logarithms | `log` (base 10), `ln` (natural log) |
+| Constants | `π`, `e` |
+| Memory | `MC`, `MR`, `M+`, `M-` (current memory value is shown above the keypad) |
+| Editing | `AC` (clear all), `C` (delete last character) |
 
-### Scientific Functions
-- **Trigonometric**: sin, cos, tan, sin⁻¹, cos⁻¹, tan⁻¹
-- **Logarithmic**: log (base 10), ln (natural log)
-- **Other**: Square root (√), Exponentiation (^), Factorial (!)
-- **Constants**: π (pi), e (Euler's number)
+**Extras**
+- Type a whole expression such as `2×sin(30)+√(81)` and see it above the result
+- History panel: every calculation is saved; click an entry to load it again, or clear the list
+- Copy the result to the clipboard with one click
+- Light and dark themes
+- Keyboard input (see below)
+- Safe evaluation: the expression is translated to JavaScript `Math` calls and checked against a whitelist of characters before it runs
 
-### Memory Functions
-- **M+**: Add current result to memory
-- **M-**: Subtract current result from memory
-- **MR**: Recall memory value
-- **MC**: Clear memory
+## Examples
 
-### Additional Features
-- Dark/Light theme toggle
-- Calculation history panel with clickable entries
-- Copy results to clipboard
-- Keyboard support for numbers and basic operations
-- Responsive design
+| Input | Result |
+|---|---|
+| `12×8+4` | `100` |
+| `2^10` | `1024` |
+| `log(1000)` | `3` |
+| `2×sin(30)+√(81)` | `10` |
+| `asin(1)` | `90` |
+| `5!` | `120` |
 
-## Tech Stack
+## Keyboard shortcuts
 
-- **Framework**: Next.js 15 (App Router)
-- **Language**: TypeScript
-- **Styling**: Tailwind CSS
-- **UI Components**: shadcn/ui
+| Key | Action |
+|---|---|
+| <kbd>0</kbd>–<kbd>9</kbd>, <kbd>.</kbd> | Digits and decimal point |
+| <kbd>+</kbd> <kbd>-</kbd> <kbd>*</kbd> <kbd>/</kbd> <kbd>^</kbd> | Operators |
+| <kbd>(</kbd> <kbd>)</kbd> | Brackets |
+| <kbd>Enter</kbd> or <kbd>=</kbd> | Calculate |
+| <kbd>Backspace</kbd> | Delete last character |
+| <kbd>Esc</kbd> | Clear all |
 
-## Getting Started
+## Tech stack
 
-### Installation
+| Layer | Tools |
+|---|---|
+| Framework | Next.js 16 (App Router), React 19 |
+| Language | TypeScript |
+| UI | Tailwind CSS 4, shadcn/ui, Lucide icons |
+
+## Getting started
+
+**Requirements:** Node.js 18.18 or newer.
 
 ```bash
-npx shadcn@latest add https://v0.dev/chat/your-project-url
-```
-
-Or clone and install manually:
-
-```bash
+git clone https://github.com/ZainAftab-dev/Scientific-Calculator-With-React.git
+cd Scientific-Calculator-With-React
 npm install
 npm run dev
 ```
 
-### Usage
+Open [http://localhost:3000](http://localhost:3000). For a production build: `npm run build` then `npm start`.
 
-1. Open the calculator in your browser
-2. Use the button panel or keyboard to input expressions
-3. Press `=` or `Enter` to evaluate
-4. Toggle between dark/light themes using the sun/moon icon
-5. View calculation history in the right panel
-6. Click any history entry to load it back into the calculator
-
-## Keyboard Shortcuts
-
-| Key | Action |
-|-----|--------|
-| 0-9 | Input numbers |
-| + - * / | Basic operations |
-| . | Decimal point |
-| Enter | Evaluate expression |
-| Escape | Clear all |
-| Backspace | Delete last character |
-
-## Project Structure
+## Project structure
 
 ```
-├── app/
-│   ├── page.tsx          # Main page
-│   ├── layout.tsx        # Root layout with fonts
-│   └── globals.css       # Global styles and theme tokens
-├── components/
-│   ├── calculator.tsx    # Main calculator component
-│   └── calculator/
-│       ├── display.tsx   # Display component
-│       ├── button-panel.tsx  # Button grid
-│       ├── calc-button.tsx   # Individual button
-│       ├── history.tsx   # History panel
-│       └── theme-toggle.tsx  # Theme switcher
-└── lib/
-    └── calculator-engine.ts  # Expression evaluation engine
+app/
+├── layout.tsx               # root layout, fonts and metadata
+├── page.tsx                 # renders <Calculator />
+└── globals.css              # theme colours (light and dark)
+components/
+├── calculator.tsx           # state: input, result, memory, history, keyboard handling
+└── calculator/
+    ├── display.tsx          # expression and result
+    ├── button-panel.tsx     # keypad layout
+    ├── calc-button.tsx      # single key
+    ├── history.tsx          # history list
+    └── theme-toggle.tsx     # light/dark switch
+lib/
+└── calculator-engine.ts     # parses and evaluates expressions
 ```
+
+## Deployment
+
+Import the repository into [Vercel](https://vercel.com/new) and deploy with the default settings. No environment variables are needed.
+
+## Author
+
+**Zain Aftab** · [GitHub](https://github.com/ZainAftab-dev) · [LinkedIn](https://www.linkedin.com/in/zain-aftab-563727295/)
 
 ## License
 
-MIT License - Feel free to use and modify as needed.
+[MIT](LICENSE)

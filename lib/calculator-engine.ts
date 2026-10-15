@@ -12,22 +12,22 @@ export function evaluate(expression: string): string {
       .replace(/π/g, `(${Math.PI})`)
       .replace(/e(?![xp])/g, `(${Math.E})`)
 
-    // Handle trigonometric functions (convert degrees to radians for standard trig)
-    expr = expr.replace(/sin$$([^)]+)$$/g, (_, arg) => `Math.sin((${evaluateInner(arg)}) * Math.PI / 180)`)
-    expr = expr.replace(/cos$$([^)]+)$$/g, (_, arg) => `Math.cos((${evaluateInner(arg)}) * Math.PI / 180)`)
-    expr = expr.replace(/tan$$([^)]+)$$/g, (_, arg) => `Math.tan((${evaluateInner(arg)}) * Math.PI / 180)`)
-
     // Handle inverse trig functions (return degrees)
-    expr = expr.replace(/asin$$([^)]+)$$/g, (_, arg) => `(Math.asin(${evaluateInner(arg)}) * 180 / Math.PI)`)
-    expr = expr.replace(/acos$$([^)]+)$$/g, (_, arg) => `(Math.acos(${evaluateInner(arg)}) * 180 / Math.PI)`)
-    expr = expr.replace(/atan$$([^)]+)$$/g, (_, arg) => `(Math.atan(${evaluateInner(arg)}) * 180 / Math.PI)`)
+    expr = expr.replace(/asin\(([^)]+)\)/g, (_, arg) => `(Math.asin(${evaluateInner(arg)}) * 180 / Math.PI)`)
+    expr = expr.replace(/acos\(([^)]+)\)/g, (_, arg) => `(Math.acos(${evaluateInner(arg)}) * 180 / Math.PI)`)
+    expr = expr.replace(/atan\(([^)]+)\)/g, (_, arg) => `(Math.atan(${evaluateInner(arg)}) * 180 / Math.PI)`)
+
+    // Handle trigonometric functions (convert degrees to radians for standard trig)
+    expr = expr.replace(/(?<![a-zA-Z.])sin\(([^)]+)\)/g, (_, arg) => `Math.sin((${evaluateInner(arg)}) * Math.PI / 180)`)
+    expr = expr.replace(/(?<![a-zA-Z.])cos\(([^)]+)\)/g, (_, arg) => `Math.cos((${evaluateInner(arg)}) * Math.PI / 180)`)
+    expr = expr.replace(/(?<![a-zA-Z.])tan\(([^)]+)\)/g, (_, arg) => `Math.tan((${evaluateInner(arg)}) * Math.PI / 180)`)
 
     // Handle logarithms
-    expr = expr.replace(/log$$([^)]+)$$/g, (_, arg) => `Math.log10(${evaluateInner(arg)})`)
-    expr = expr.replace(/ln$$([^)]+)$$/g, (_, arg) => `Math.log(${evaluateInner(arg)})`)
+    expr = expr.replace(/log\(([^)]+)\)/g, (_, arg) => `Math.log10(${evaluateInner(arg)})`)
+    expr = expr.replace(/ln\(([^)]+)\)/g, (_, arg) => `Math.log(${evaluateInner(arg)})`)
 
     // Handle square root
-    expr = expr.replace(/√$$([^)]+)$$/g, (_, arg) => `Math.sqrt(${evaluateInner(arg)})`)
+    expr = expr.replace(/√\(([^)]+)\)/g, (_, arg) => `Math.sqrt(${evaluateInner(arg)})`)
     expr = expr.replace(/√(\d+\.?\d*)/g, (_, num) => `Math.sqrt(${num})`)
 
     // Handle factorial
