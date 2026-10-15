@@ -2,28 +2,35 @@
 
 import { cn } from "@/lib/utils"
 
+export type KeyVariant = "digit" | "operator" | "function" | "memory" | "clear" | "equals"
+
 interface CalcButtonProps {
   value: string
-  variant?: "default" | "operator" | "function" | "memory" | "clear" | "equals"
+  label?: string
+  variant?: KeyVariant
   onClick: () => void
   className?: string
+  pressed?: boolean
 }
 
-export function CalcButton({ value, variant = "default", onClick, className }: CalcButtonProps) {
-  const baseStyles =
-    "h-12 rounded-lg font-medium text-base transition-all duration-150 active:scale-95 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-1"
+const variantStyles: Record<KeyVariant, string> = {
+  digit: "bg-key text-key-text text-xl font-semibold h-12",
+  operator: "bg-amber text-[#1f1a10] text-2xl font-semibold h-12",
+  function: "bg-key-fn text-key-fn-text text-[15px] font-semibold h-10",
+  memory: "bg-key-fn text-memory text-sm font-bold tracking-wide h-12",
+  clear: "bg-brick text-white text-base font-bold h-12",
+  equals: "bg-amber text-[#1f1a10] text-2xl font-bold h-12",
+}
 
-  const variantStyles = {
-    default: "bg-secondary text-secondary-foreground hover:bg-secondary/80",
-    operator: "bg-primary text-primary-foreground hover:bg-primary/90",
-    function: "bg-accent text-accent-foreground hover:bg-accent/80",
-    memory: "bg-muted text-muted-foreground hover:bg-muted/80 text-sm",
-    clear: "bg-destructive/20 text-destructive hover:bg-destructive/30",
-    equals: "bg-primary text-primary-foreground hover:bg-primary/90 font-bold text-lg",
-  }
-
+export function CalcButton({ value, label, variant = "digit", onClick, className, pressed }: CalcButtonProps) {
   return (
-    <button className={cn(baseStyles, variantStyles[variant], className)} onClick={onClick}>
+    <button
+      type="button"
+      aria-label={label ?? value}
+      data-pressed={pressed}
+      className={cn("key select-none rounded-xl", variantStyles[variant], className)}
+      onClick={onClick}
+    >
       {value}
     </button>
   )

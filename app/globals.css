@@ -4,6 +4,22 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
+  /* "Pearl" body (light) */
+  --desk: #d9d6cf;
+  --body: #efede8;
+  --body-edge: #c9c5bc;
+  --label: #5b5f66;
+  --key: #ffffff;
+  --key-text: #24272c;
+  --key-fn: #dad7d0;
+  --key-fn-text: #24272c;
+  --amber: #f0a030;
+  --memory: #8a4f00;
+  --brick: #c8453a;
+  --lcd: #c3ceb4;
+  --lcd-ink: #1f271c;
+  --tape: #fbfaf6;
+  --tape-ink: #2b2b2b;
   --background: oklch(0.98 0.005 240);
   --foreground: oklch(0.15 0.02 240);
   --card: oklch(1 0 0);
@@ -40,6 +56,22 @@
 }
 
 .dark {
+  /* "Graphite" body (dark) */
+  --desk: #121417;
+  --body: #25282d;
+  --body-edge: #0b0c0e;
+  --label: #9aa1ab;
+  --key: #4a5059;
+  --key-text: #f3f4f6;
+  --key-fn: #353940;
+  --key-fn-text: #dfe3e8;
+  --amber: #f2a33a;
+  --memory: #f2a33a;
+  --brick: #cf4f42;
+  --lcd: #b9c6a8;
+  --lcd-ink: #1c2419;
+  --tape: #f4f1e8;
+  --tape-ink: #2b2b2b;
   --background: oklch(0.12 0.02 250);
   --foreground: oklch(0.95 0.01 240);
   --card: oklch(0.16 0.02 250);
@@ -75,7 +107,23 @@
 }
 
 @theme inline {
-  --font-sans: "Geist", "Geist Fallback";
+  --font-sans: "Archivo Variable", system-ui, sans-serif;
+  --font-lcd: "Share Tech Mono", ui-monospace, monospace;
+  --color-desk: var(--desk);
+  --color-body: var(--body);
+  --color-body-edge: var(--body-edge);
+  --color-label: var(--label);
+  --color-key: var(--key);
+  --color-key-text: var(--key-text);
+  --color-key-fn: var(--key-fn);
+  --color-key-fn-text: var(--key-fn-text);
+  --color-amber: var(--amber);
+  --color-memory: var(--memory);
+  --color-brick: var(--brick);
+  --color-lcd: var(--lcd);
+  --color-lcd-ink: var(--lcd-ink);
+  --color-tape: var(--tape);
+  --color-tape-ink: var(--tape-ink);
   --font-mono: "Geist Mono", "Geist Mono Fallback";
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -122,4 +170,45 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+
+/* ---------- Calculator device ---------- */
+.device {
+  background: linear-gradient(180deg, color-mix(in srgb, var(--body) 92%, white) 0%, var(--body) 18%);
+  box-shadow:
+    0 1px 0 color-mix(in srgb, white 25%, transparent) inset,
+    0 -3px 0 var(--body-edge) inset,
+    0 30px 60px -30px rgb(0 0 0 / 0.55),
+    0 12px 24px -12px rgb(0 0 0 / 0.35);
+}
+.lcd {
+  background: var(--lcd);
+  box-shadow:
+    inset 0 2px 6px rgb(0 0 0 / 0.28),
+    inset 0 0 0 1px rgb(0 0 0 / 0.18);
+  background-image: linear-gradient(transparent 0 calc(100% - 1px), rgb(0 0 0 / 0.025) 0);
+  background-size: 100% 3px;
+}
+.key {
+  box-shadow: 0 2px 0 rgb(0 0 0 / 0.35), inset 0 1px 0 rgb(255 255 255 / 0.12);
+  transition: transform 80ms ease-out, box-shadow 80ms ease-out, filter 120ms;
+}
+.key:hover {
+  filter: brightness(1.08);
+}
+.key:active,
+.key[data-pressed="true"] {
+  transform: translateY(2px);
+  box-shadow: 0 0 0 rgb(0 0 0 / 0.35), inset 0 1px 0 rgb(255 255 255 / 0.12);
+}
+.tape {
+  background:
+    radial-gradient(circle at 10px 0, transparent 6px, var(--tape) 6.5px) 0 0 / 20px 100% repeat-x;
+}
+:focus-visible {
+  outline: 2px solid var(--amber);
+  outline-offset: 2px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .key { transition: none; }
 }

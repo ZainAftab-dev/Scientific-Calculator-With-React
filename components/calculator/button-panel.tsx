@@ -1,76 +1,91 @@
 "use client"
 
-import { CalcButton } from "./calc-button"
+import { CalcButton, type KeyVariant } from "./calc-button"
 
 interface ButtonPanelProps {
   onInput: (value: string) => void
+  pressedKey: string | null
 }
 
-const buttons = [
-  // Row 1 - Scientific functions
-  ["sin", "cos", "tan", "π"],
-  // Row 2 - More scientific
-  ["asin", "acos", "atan", "e"],
-  // Row 3 - Advanced operations
-  ["√", "^", "!", "log"],
-  // Row 4 - More operations
-  ["ln", "(", ")", "÷"],
-  // Row 5 - Memory & numbers
-  ["MC", "7", "8", "9"],
-  // Row 6
-  ["MR", "4", "5", "6"],
-  // Row 7
-  ["M+", "1", "2", "3"],
-  // Row 8
-  ["M-", "0", ".", "×"],
-  // Row 9 - Operations
-  ["AC", "C", "-", "+"],
-  // Row 10 - Equals
-  ["="],
+type KeyDef = { value: string; variant: KeyVariant; label?: string; span?: string }
+
+const FUNCTION_KEYS: KeyDef[] = [
+  { value: "sin", variant: "function", label: "Sine" },
+  { value: "cos", variant: "function", label: "Cosine" },
+  { value: "tan", variant: "function", label: "Tangent" },
+  { value: "π", variant: "function", label: "Pi" },
+  { value: "asin", variant: "function", label: "Inverse sine" },
+  { value: "acos", variant: "function", label: "Inverse cosine" },
+  { value: "atan", variant: "function", label: "Inverse tangent" },
+  { value: "e", variant: "function", label: "Euler's number" },
+  { value: "√", variant: "function", label: "Square root" },
+  { value: "^", variant: "function", label: "Power" },
+  { value: "!", variant: "function", label: "Factorial" },
+  { value: "log", variant: "function", label: "Log base 10" },
+  { value: "ln", variant: "function", label: "Natural log" },
+  { value: "(", variant: "function", label: "Open bracket" },
+  { value: ")", variant: "function", label: "Close bracket" },
+  { value: "C", variant: "function", label: "Delete last character" },
 ]
 
-const buttonStyles: Record<string, "default" | "operator" | "function" | "memory" | "clear" | "equals"> = {
-  "+": "operator",
-  "-": "operator",
-  "×": "operator",
-  "÷": "operator",
-  "=": "equals",
-  AC: "clear",
-  C: "clear",
-  sin: "function",
-  cos: "function",
-  tan: "function",
-  asin: "function",
-  acos: "function",
-  atan: "function",
-  "√": "function",
-  "^": "function",
-  "!": "function",
-  log: "function",
-  ln: "function",
-  π: "function",
-  e: "function",
-  "(": "function",
-  ")": "function",
-  MC: "memory",
-  MR: "memory",
-  "M+": "memory",
-  "M-": "memory",
-}
+const MAIN_KEYS: KeyDef[] = [
+  { value: "MC", variant: "memory", label: "Memory clear" },
+  { value: "MR", variant: "memory", label: "Memory recall" },
+  { value: "M-", variant: "memory", label: "Memory subtract" },
+  { value: "M+", variant: "memory", label: "Memory add" },
+  { value: "7", variant: "digit" },
+  { value: "8", variant: "digit" },
+  { value: "9", variant: "digit" },
+  { value: "÷", variant: "operator", label: "Divide" },
+  { value: "4", variant: "digit" },
+  { value: "5", variant: "digit" },
+  { value: "6", variant: "digit" },
+  { value: "×", variant: "operator", label: "Multiply" },
+  { value: "1", variant: "digit" },
+  { value: "2", variant: "digit" },
+  { value: "3", variant: "digit" },
+  { value: "-", variant: "operator", label: "Subtract" },
+  { value: "0", variant: "digit" },
+  { value: ".", variant: "digit", label: "Decimal point" },
+  { value: "AC", variant: "clear", label: "All clear" },
+  { value: "+", variant: "operator", label: "Add" },
+]
 
-export function ButtonPanel({ onInput }: ButtonPanelProps) {
+export function ButtonPanel({ onInput, pressedKey }: ButtonPanelProps) {
   return (
-    <div className="p-3 bg-card">
-      <div className="grid grid-cols-4 gap-2">
-        {buttons.flat().map((btn, index) => (
+    <div className="space-y-4">
+      <div className="grid grid-cols-4 gap-2" role="group" aria-label="Scientific functions">
+        {FUNCTION_KEYS.map((k) => (
           <CalcButton
-            key={`${btn}-${index}`}
-            value={btn}
-            variant={buttonStyles[btn] || "default"}
-            onClick={() => onInput(btn)}
-            className={btn === "=" ? "col-span-4" : ""}
+            key={k.value}
+            value={k.value === "C" ? "⌫" : k.value}
+            label={k.label}
+            variant={k.variant}
+            onClick={() => onInput(k.value)}
+            pressed={pressedKey === k.value}
           />
         ))}
+      </div>
+      <div className="h-px bg-label/25" aria-hidden="true" />
+      <div className="grid grid-cols-4 gap-2.5" role="group" aria-label="Numbers and operators">
+        {MAIN_KEYS.map((k) => (
+          <CalcButton
+            key={k.value}
+            value={k.value}
+            label={k.label}
+            variant={k.variant}
+            onClick={() => onInput(k.value)}
+            pressed={pressedKey === k.value}
+          />
+        ))}
+        <CalcButton
+          value="="
+          label="Equals"
+          variant="equals"
+          className="col-span-4"
+          onClick={() => onInput("=")}
+          pressed={pressedKey === "="}
+        />
       </div>
     </div>
   )

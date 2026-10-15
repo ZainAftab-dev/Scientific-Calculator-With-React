@@ -1,17 +1,34 @@
 interface DisplayProps {
   input: string
   result: string
+  hasMemory: boolean
 }
 
-export function Display({ input, result }: DisplayProps) {
+export function Display({ input, result, hasMemory }: DisplayProps) {
+  const isError = result === "Error"
+  const main = result || input || "0"
   return (
-    <div className="bg-muted px-4 py-6 min-h-[120px] flex flex-col justify-end">
-      <div className="text-right">
-        <div className="text-muted-foreground text-lg font-mono min-h-[28px] overflow-x-auto whitespace-nowrap">
-          {input || "0"}
-        </div>
-        <div className="text-foreground text-3xl font-mono font-bold min-h-[40px]">{result || ""}</div>
+    <div className="lcd rounded-xl px-4 pb-3 pt-2 font-lcd text-lcd-ink">
+      <div className="flex items-center justify-between text-xs tracking-widest opacity-80">
+        <span aria-label="Angles in degrees">DEG</span>
+        <span aria-hidden={!hasMemory} className={hasMemory ? "" : "opacity-0"}>
+          M
+        </span>
       </div>
+      <div
+        className="mt-1 min-h-6 overflow-x-auto whitespace-nowrap text-right text-lg opacity-70"
+        aria-label="Expression"
+      >
+        {result ? input : "\u00a0"}
+      </div>
+      <output
+        aria-live="polite"
+        className={`block overflow-x-auto whitespace-nowrap text-right leading-tight ${
+          main.length > 14 ? "text-3xl" : "text-5xl"
+        } ${isError ? "tracking-widest" : ""}`}
+      >
+        {main}
+      </output>
     </div>
   )
 }

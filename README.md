@@ -2,7 +2,7 @@
 
 # 🧮 Scientific Calculator (React + Next.js)
 
-A responsive scientific calculator with full expression input, memory keys, a clickable history panel, keyboard support and light/dark themes.
+A scientific calculator styled like a real desk device: an LCD display, raised keys, and a paper-tape history that prints every result. Full expression input, memory keys, keyboard support and two body finishes.
 
 ![Next.js](https://img.shields.io/badge/Next.js-16-000000?logo=nextdotjs&logoColor=white)
 ![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=black)
@@ -10,7 +10,7 @@ A responsive scientific calculator with full expression input, memory keys, a cl
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4-06B6D4?logo=tailwindcss&logoColor=white)
 ![License](https://img.shields.io/badge/license-MIT-green)
 
-<img src="docs/screenshot.png" alt="Scientific calculator with history panel" width="330"/>
+<img src="docs/screenshot.png" alt="Graphite calculator with paper tape" width="520"/>
 
 </div>
 
@@ -30,13 +30,22 @@ A responsive scientific calculator with full expression input, memory keys, a cl
 | Memory | `MC`, `MR`, `M+`, `M-` (current memory value is shown above the keypad) |
 | Editing | `AC` (clear all), `C` (delete last character) |
 
+**Design**
+- Hardware-inspired body with raised keys that press down, an LCD display (Share Tech Mono) with DEG and M indicators, and amber operator keys
+- History prints onto a "paper tape" next to the calculator (a toggle on phones)
+- Two finishes: graphite (dark) and pearl (light)
+- Keys light up when you type on the keyboard; every key has a screen-reader label
+
 **Extras**
 - Type a whole expression such as `2×sin(30)+√(81)` and see it above the result
-- History panel: every calculation is saved; click an entry to load it again, or clear the list
+- Paper-tape history: every calculation is saved; click an entry to load it again, or clear the tape
 - Copy the result to the clipboard with one click
-- Light and dark themes
 - Keyboard input (see below)
 - Safe evaluation: the expression is translated to JavaScript `Math` calls and checked against a whitelist of characters before it runs
+
+## Pearl finish
+
+<img src="docs/light.png" alt="Pearl (light) calculator" width="380"/>
 
 ## Examples
 
@@ -66,7 +75,7 @@ A responsive scientific calculator with full expression input, memory keys, a cl
 |---|---|
 | Framework | Next.js 16 (App Router), React 19 |
 | Language | TypeScript |
-| UI | Tailwind CSS 4, shadcn/ui, Lucide icons |
+| UI | Tailwind CSS 4, Lucide icons, Archivo + Share Tech Mono via Fontsource |
 
 ## Getting started
 
@@ -94,8 +103,8 @@ components/
     ├── display.tsx          # expression and result
     ├── button-panel.tsx     # keypad layout
     ├── calc-button.tsx      # single key
-    ├── history.tsx          # history list
-    └── theme-toggle.tsx     # light/dark switch
+    ├── history.tsx          # paper-tape history
+    └── theme-toggle.tsx     # graphite/pearl switch
 lib/
 └── calculator-engine.ts     # parses and evaluates expressions
 ```

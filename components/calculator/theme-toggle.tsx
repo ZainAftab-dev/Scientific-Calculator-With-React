@@ -10,11 +10,12 @@ interface ThemeToggleProps {
 export function ThemeToggle({ isDark, onToggle }: ThemeToggleProps) {
   return (
     <button
+      type="button"
       onClick={onToggle}
-      className="p-2 rounded-lg hover:bg-accent transition-colors text-muted-foreground hover:text-foreground"
-      aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
+      className="grid h-10 w-10 place-items-center rounded-full text-label transition-colors hover:bg-black/10 hover:text-key-text dark:hover:bg-white/10"
+      aria-label={isDark ? "Switch to pearl body" : "Switch to graphite body"}
     >
-      {isDark ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+      {isDark ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
     </button>
   )
 }

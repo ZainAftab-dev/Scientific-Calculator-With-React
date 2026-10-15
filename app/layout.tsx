@@ -1,16 +1,13 @@
 import type React from "react"
 import type { Metadata, Viewport } from "next"
-import { Geist, Geist_Mono } from "next/font/google"
+import "@fontsource-variable/archivo"
+import "@fontsource/share-tech-mono"
 import { Analytics } from "@vercel/analytics/next"
 import "./globals.css"
 
-const _geist = Geist({ subsets: ["latin"] })
-const _geistMono = Geist_Mono({ subsets: ["latin"] })
-
 export const metadata: Metadata = {
   title: "Scientific Calculator",
-  description: "A modern scientific calculator with advanced functions",
-  generator: "v0.app",
+  description: "A scientific calculator with trig, logs, powers, memory keys, a printed-tape history and keyboard input.",
   icons: {
     icon: [
       {
@@ -32,8 +29,8 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = {
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
-    { media: "(prefers-color-scheme: dark)", color: "#0a0a0a" },
+    { media: "(prefers-color-scheme: light)", color: "#d9d6cf" },
+    { media: "(prefers-color-scheme: dark)", color: "#121417" },
   ],
 }
 
@@ -43,7 +40,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className="dark">
       <body className={`font-sans antialiased`}>
         {children}
         <Analytics />

@@ -2,7 +2,7 @@ import { Calculator } from "@/components/calculator"
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-background flex items-center justify-center p-4">
+    <main className="flex min-h-dvh items-start justify-center bg-desk px-4 py-8 sm:items-center sm:py-12">
       <Calculator />
     </main>
   )
