@@ -10,6 +10,8 @@ A scientific calculator styled like a real desk device: an LCD display, raised k
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4-06B6D4?logo=tailwindcss&logoColor=white)
 ![License](https://img.shields.io/badge/license-MIT-green)
 
+**[▶ Live demo: scientific-calculator-zain.vercel.app](https://scientific-calculator-zain.vercel.app)**
+
 <img src="docs/screenshot.png" alt="Graphite calculator with paper tape" width="520"/>
 
 </div>
